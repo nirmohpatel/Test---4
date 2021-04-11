@@ -22,7 +22,6 @@ public class ContactPage extends BasePage
     private String messageField = "message";
     private String expectedMessageForErrorGone = "We welcome your feedback - tell it how it is.";
     private String actualMessageForErrorGone = "//div[@class=\"alert alert-info ng-scope\"]";
-    private String expectedFeedBackMessage = "Thanks John, we appreciate your feedback.";
     private String actualFeedBackMessage = "//div[@class=\"alert alert-success\"]";
 
     public void toVerifyThatUserIsOnContactPage()
@@ -79,7 +78,7 @@ public class ContactPage extends BasePage
         utilsAssert.verifyActualAndExpected(ReceiveMessage3,actualValueForMessageFieldErrorMessage);
     }
 
-    public void toVerifyAllErrorAreGone()
+    public void toVerifyAllErrorsAreGone()
     {
         elements = new Elements();
         utilsAssert = new UtilsAssert();
@@ -87,13 +86,23 @@ public class ContactPage extends BasePage
         utilsAssert.verifyActualAndExpected(expectedMessageForErrorGone,actualValueForMessageForErrorGone);
     }
 
-    public void toVerifyUserSendFeedBackSuccessfullyMessage()
+    public void toVerifyUserSendFeedBackSuccessfullyMessage(String submittedMessage)
     {
         elements = new Elements();
         utilsAssert = new UtilsAssert();
         utilsWait = new UtilsWait();
         utilsWait.waitForElementToBeVisibleXpath(actualFeedBackMessage);
         String actualValueForFeedBackMessage = elements.element_Xpath(actualFeedBackMessage).getText();
-        utilsAssert.verifyActualAndExpected(expectedFeedBackMessage,actualValueForFeedBackMessage);
+        utilsAssert.verifyActualAndExpected(submittedMessage,actualValueForFeedBackMessage);
+    }
+
+    public void toVerifyEmailFieldInvalidDataErrorMessage(String Error)
+    {
+        //private String expectedEmailFieldInvalidDataErrorMessage = "Please enter a valid email";
+       // private String actualEmailFieldInvalidDataErrorMessage = "id=\"email-err\"";
+        elements = new Elements();
+        utilsAssert = new UtilsAssert();
+        String actualValueForEmailFieldInvalidDataErrorMessage =  elements.element_ID(actualEmailFieldErrorMessage).getText();
+        utilsAssert.verifyActualAndExpected(Error,actualValueForEmailFieldInvalidDataErrorMessage);
     }
 }

@@ -1,5 +1,6 @@
 package org.example;
 
+import JupiterToys.CartPage;
 import JupiterToys.ContactPage;
 import JupiterToys.HomePage;
 import JupiterToys.ShopPage;
@@ -11,6 +12,7 @@ public class MyStepDefs_JupiterToys
     HomePage homePage = new HomePage();
     ContactPage contactPage = new ContactPage();
     ShopPage shopPage = new ShopPage();
+    CartPage cartPage = new CartPage();
 
     @Given("^I am on Jupiter toys Home Page$")
     public void i_am_on_Jupiter_toys_Home_Page()
@@ -81,13 +83,26 @@ public class MyStepDefs_JupiterToys
     @Then("^I should be able to verify all mandatory field errors are gone$")
     public void iShouldBeAbleToVerifyAllMandatoryFieldErrorsAreGone()
     {
-        contactPage.toVerifyAllErrorAreGone();
+        contactPage.toVerifyAllErrorsAreGone();
     }
 
-    @Then("^I should be able to validate Message successfully$")
-    public void iShouldBeAbleToValidateMessageSuccessfully()
+    @Then("^I should be able to verify feedback successfully submitted message \"([^\"]*)\"$")
+    public void iShouldBeAbleToVerifyFeedbackSuccessfullySubmittedMessage(String submittedMessage)
+    {
+        contactPage.toVerifyUserSendFeedBackSuccessfullyMessage(submittedMessage);
+    }
+
+   /* @Then("^I should be able to verify feedback successfully submitted message$")
+    public void iShouldBeAbleToVerifyFeedbackSuccessfullySubmittedMessage()
     {
         contactPage.toVerifyUserSendFeedBackSuccessfullyMessage();
+    }*/
+
+
+    @Then("^I should be able to validate \"([^\"]*)\"errors successfully$")
+    public void iShouldBeAbleToValidateErrorsSuccessfully(String Error)
+    {
+        contactPage.toVerifyEmailFieldInvalidDataErrorMessage(Error);
     }
 
     @When("^I click on shop$")
@@ -102,9 +117,16 @@ public class MyStepDefs_JupiterToys
         shopPage.toVerifyThatUserIsOnShopPage();
     }
 
+    @And("^I should not see any items present in cart$")
+    public void iShouldNotSeeAnyItemsPresentInCart()
+    {
+        shopPage.toVerifyThatCartIsEmpty();
+    }
+
     @And("^I can click buy button two times on Funny Cow product$")
     public void iCanClickBuyButtonTwoTimesOnFunnyCowProduct()
     {
+        shopPage.clickOnFunnyCowBuyButton();
         shopPage.clickOnFunnyCowBuyButton();
     }
 
@@ -120,8 +142,20 @@ public class MyStepDefs_JupiterToys
         shopPage.clickOnCart();
     }
 
-    @Then("^I am able to verify items are in the cart$")
-    public void iAmAbleToVerifyItemsAreInTheCart()
+    @Then("^I am able to verify \\(Three\\) items are in the cart$")
+    public void iAmAbleToVerifyThreeItemsAreInTheCart()
     {
+        shopPage.toVerifyThatCartWithProduct();
     }
+
+    @And("^I should able to validate relevant product quantity field \\(Funny Cow = Two Nos and Fluffy Bunny = One Nos\\) in cart$")
+    public void iShouldAbleToValidateRelevantProductQuantityFieldFunnyCowTwoNosAndFluffyBunnyOneNosInCart()
+    {
+        cartPage.toValidateCheckOutButton();
+        cartPage.toVerifyTotalProductAndThereQuantityInCart();
+        cartPage.toVerifyFirstProductAndThereQuantityInCart();
+        cartPage.toVerifySecondProductAndThereQuantityInCart();
+    }
+
+
 }

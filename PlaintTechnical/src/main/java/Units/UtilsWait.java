@@ -25,6 +25,11 @@ public class UtilsWait extends BasePage
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
     }
 
+    public void waitForElementToBeClickableLinkText (String linkText){
+        wait = new WebDriverWait(driver,40);
+        wait.until(ExpectedConditions.elementToBeClickable(By.linkText(linkText)));
+    }
+
     public void waitForElementToBeVisibleID(String id)
     {
         wait = new WebDriverWait(driver,50);
@@ -41,5 +46,10 @@ public class UtilsWait extends BasePage
     {
         wait = new WebDriverWait(driver,50);
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
+    }
+
+    public void waitForElementToBeVisibleLinkText (String linkText){
+        wait = new WebDriverWait(driver,40);
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.linkText(linkText)));
     }
 }
